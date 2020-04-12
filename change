@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+public class Change {
+    public static void main(String[] args) {
+
+        int total, balance, change;
+        int fiveman = 0;
+        int oneman = 0;
+        int fivechun = 0;
+        int onechun = 0;
+        int fiveback = 0;
+        int oneback = 0;
+        int fivesip = 0;
+        int onesip = 0;
+
+        Scanner scanner = new Scanner(System.in);
+
+        /* balance가 잔액이고, total이 주문금액입니다 */
+
+        balance = scanner.nextInt();
+        total = scanner.nextInt();
+
+        change = balance - total;
+
+        if(change < 0) {
+            /*
+            error 코드 작성
+             */
+        }
+
+        while(change >= 50000) {
+            change = change - 50000;
+            fiveman += 1;
+        }
+
+        while(change >= 10000) {
+            change = change - 10000;
+            oneman += 1;
+        }
+
+        while(change >= 5000) {
+            change = change - 5000;
+            fivechun += 1;
+        }
+
+        while(change >= 1000) {
+            change = change - 1000;
+            onechun += 1;
+        }
+
+        while(change >= 500) {
+            change = change - 500;
+            fiveback += 1;
+        }
+
+        while(change >= 100) {
+            change = change - 100;
+            oneback += 1;
+        }
+
+        while(change >= 50) {
+            change = change - 50;
+            fivesip += 1;
+        }
+
+        while(change >= 10) {
+            change = change - 10;
+            onesip += 1;
+        }
+
+        System.out.print("잔돈은\n" + "오만원 지폐 " + fiveman + "장\n" + "만원 지폐 " + oneman + "장\n" + "오천원 지폐 " + fivechun+ "장\n" + "천원 지폐 " + onechun + "장\n" +  "오백원 동전 " + fiveback + "개\n" + "백원 동전 " + oneback + "개\n" + "오십원 동전 " + fivesip + "개\n" +  "십원 동전 " + onesip + "개\n" + "입니다.");
+
+        scanner.close();
+
+    }
+}
