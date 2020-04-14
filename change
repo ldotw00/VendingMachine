@@ -1,0 +1,108 @@
+import java.util.Scanner;
+
+public class Change {
+    public static void main(String[] args) {
+
+        int price, input, change;
+        int fiveman = 0;
+        int oneman = 0;
+        int fivechun = 0;
+        int onechun = 0;
+        int fiveback = 0;
+        int oneback = 0;
+        int fivesip = 0;
+        int onesip = 0;
+
+        Scanner scanner = new Scanner(System.in);
+
+        price = scanner.nextInt(); // 주문 금액
+
+        int retry = 0;
+
+        do{
+            if(retry != 0) {
+                System.err.println("잔액이 부족합니다!");
+            }
+            input = scanner.nextInt(); // 넣는 금액
+            change = input - price;
+            retry++;
+
+        }while(change < 0);
+
+        int sum_change = change;
+
+        while(change >= 50000) {
+            change = change - 50000;
+            fiveman += 1;
+        }
+
+        while(change >= 10000) {
+            change = change - 10000;
+            oneman += 1;
+        }
+
+        while(change >= 5000) {
+            change = change - 5000;
+            fivechun += 1;
+        }
+
+        while(change >= 1000) {
+            change = change - 1000;
+            onechun += 1;
+        }
+
+        while(change >= 500) {
+            change = change - 500;
+            fiveback += 1;
+        }
+
+        while(change >= 100) {
+            change = change - 100;
+            oneback += 1;
+        }
+
+        while(change >= 50) {
+            change = change - 50;
+            fivesip += 1;
+        }
+
+        while(change >= 10) {
+            change = change - 10;
+            onesip += 1;
+        }
+
+        System.out.println("[ 받으실 거스름돈은 ]");
+        System.out.println("================");
+        if(fiveman > 0)
+        System.out.println("   " + fiveman + " X 50000원");
+
+        if(oneman > 0)
+        System.out.println("   " + oneman + " X 10000원");
+
+        if(fivechun > 0)
+        System.out.println("   " + fivechun + " X 5000원");
+
+        if(onechun > 0)
+        System.out.println("   " + onechun + " X 1000원");
+
+        if(fiveback > 0)
+        System.out.println("   " + fiveback + " X 500원");
+
+        if(oneback > 0)
+        System.out.println("   " + oneback + " X 100원");
+
+        if(fivesip > 0)
+        System.out.println("   " + fivesip + " X 50원");
+
+        if(onesip > 0)
+        System.out.println("   " + onesip + " X 10원");
+
+        System.out.println("================");
+        System.out.println("총 " + sum_change + "원 입니다.");
+        System.out.println("================");
+        System.out.println("Enjoy Your Meal!");
+
+        scanner.close();
+
+    }
+}
