@@ -47,14 +47,14 @@ public class VendingMachine extends JTable {
             onesip += 1; }
         JOptionPane.showMessageDialog(btnchange,"잔돈은 총 " +sum_change+ "원 입니다.\n"
                         + "===============\n"
-                        + "        50000원 X " + fiveman + "장\n"
-                        + "        10000원 X " + oneman + "장\n"
-                        + "        5000원   X " + fivechun + "장\n"
-                        + "        1000원   X " + onechun + "장\n"
-                        + "        500원     X " + fiveback + "개\n"
-                        + "        100원     X " + oneback + "개\n"
-                        + "        50원       X " + fivesip + "개\n"
-                        + "        10원       X " + onesip + "개\n"
+                        + "    50000원 X " + fiveman + "장\n"
+                        + "    10000원 X " + oneman + "장\n"
+                        + "    5000원   X " + fivechun + "장\n"
+                        + "    1000원   X " + onechun + "장\n"
+                        + "    500원     X " + fiveback + "개\n"
+                        + "    100원     X " + oneback + "개\n"
+                        + "    50원       X " + fivesip + "개\n"
+                        + "    10원       X " + onesip + "개\n"
                         + "===============\n"
                 , "잔돈 확인",JOptionPane.INFORMATION_MESSAGE);
 
@@ -115,7 +115,7 @@ public class VendingMachine extends JTable {
 
     public void layouts() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JPanel order = new JPanel(new GridLayout(3, 1));
+        JPanel order = new JPanel(new GridLayout(2, 1));
 
         JPanel pn0 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel pn1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -128,28 +128,28 @@ public class VendingMachine extends JTable {
         IntegerDocument integeronly2 = new IntegerDocument ();
         txtinput.setDocument(integeronly2);
 
-        txttotal.setFont(new Font("Arial", Font.BOLD, 30));
-        txtinput.setFont(new Font("Arial", Font.BOLD, 30));
+        txttotal.setFont(new Font("굴림", Font.BOLD, 30));
+        txtinput.setFont(new Font("굴림", Font.BOLD, 30));
 
         btnpurchase = new JButton("구매하기");
         btnchange = new JButton("잔돈확인");
 
-        btnpurchase.setFont(new Font("Arial", Font.BOLD, 30));
-        btnchange.setFont(new Font("Arial", Font.BOLD, 30));
+        btnpurchase.setFont(new Font("굴림", Font.BOLD, 30));
+        btnchange.setFont(new Font("굴림", Font.BOLD, 30));
 
-        ImageIcon menu = new ImageIcon(getClass().getResource("image/set.png"));
+        ImageIcon menu = new ImageIcon(getClass().getResource("image/Set.png"));
         JLabel img = new JLabel(menu);
         pn0.add(img);
 
         JLabel text1 = new JLabel("구매 금액 :");
-        text1.setFont(new Font("Arial", Font.BOLD, 30));
+        text1.setFont(new Font("굴림", Font.BOLD, 30));
 
         pn1.add(text1);
         pn1.add(txttotal);
         pn1.add(btnpurchase);
 
         JLabel text2 = new JLabel("투입 금액 :");
-        text2.setFont(new Font("Arial", Font.BOLD, 30));
+        text2.setFont(new Font("굴림", Font.BOLD, 30));
 
         pn1.add(text2);
         pn1.add(txtinput);
@@ -162,10 +162,8 @@ public class VendingMachine extends JTable {
         /*
         JPanel bottomPn1 = new JPanel();
         bottomPn1.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-
         bottomPn1.add(btnpurchase);
         bottomPn1.add(btnchange);
-
         this.add(bottomPn1);
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
          */
