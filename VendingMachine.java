@@ -91,7 +91,7 @@ public class VendingMachine extends JTable {
             if (num >= 1000) {
                 return (num + "원 X " + unit + "장\n");
             } else {
-                return (num + "원 X " + unit + "\n");
+                return (num + "원 X " + unit + "개\n");
             }
         }
         else
