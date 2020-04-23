@@ -234,13 +234,13 @@ public class VendingMachine extends JTable {
         field3.setPreferredSize(prefSize3);
 
         pn1.add(spin1);
-        spin1.setFont(new Font("굴림", Font.BOLD, 20));
+        spin1.setFont(new Font("굴림", Font.BOLD, 15));
 
         pn1.add(spin2);
-        spin2.setFont(new Font("굴림", Font.BOLD, 20));
+        spin2.setFont(new Font("굴림", Font.BOLD, 15));
 
         pn1.add(spin3);
-        spin3.setFont(new Font("굴림", Font.BOLD, 20));
+        spin3.setFont(new Font("굴림", Font.BOLD, 15));
 
         JLabel space = new JLabel("                        " +
                 "                           " +
