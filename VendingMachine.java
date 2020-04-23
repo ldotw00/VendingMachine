@@ -323,6 +323,7 @@ public class VendingMachine extends JTable {
                 int savedtotal = resultprice;
                 if(txtinput.getText().length() == 0) {
                     JOptionPane.showMessageDialog(btnpurchase, "투입된 금액이 없습니다.\n금액을 투입해주세요", "금액 투입", JOptionPane.PLAIN_MESSAGE);
+                    btnchange.setEnabled(false);
                 }
                 else {
                     int savedinput = Integer.parseInt(txtinput.getText());
