@@ -1,5 +1,9 @@
 import javax.swing.*;
 
+import javax.swing.event.ChangeEvent;
+
+import javax.swing.event.ChangeListener;
+
 import javax.swing.text.AttributeSet;
 
 import javax.swing.text.BadLocationException;
@@ -12,6 +16,8 @@ import java.awt.event.MouseAdapter;
 
 import java.awt.event.MouseEvent;
 
+import java.awt.event.MouseListener;
+
 
 
 public class VendingMachine extends JTable {
@@ -20,7 +26,7 @@ public class VendingMachine extends JTable {
 
     JTextField txttotal, txtinput;
 
-    JButton btnpurchase, btnchange;
+    JButton btnselect, btnpurchase, btnchange;
 
 
 
@@ -32,98 +38,232 @@ public class VendingMachine extends JTable {
 
 
 
+    int sum_change;
+
     public void calculatechange(int change) {
 
-        int fiveman = 0; int oneman = 0;
+        int fiveman = 0;
 
-        int fivechun = 0; int onechun = 0;
+        int oneman = 0;
 
-        int fiveback = 0; int oneback = 0;
+        int fivechun = 0;
 
-        int fivesip = 0; int onesip = 0;
+        int onechun = 0;
 
-        int sum_change = change;
+        int fiveback = 0;
+
+        int oneback = 0;
+
+        int fivesip = 0;
+
+        int onesip = 0;
+
+        sum_change = change;
 
         while (change >= 50000) {
 
             change = change - 50000;
 
-            fiveman += 1; }
+            fiveman += 1;
+
+        }
 
         while (change >= 10000) {
 
             change = change - 10000;
 
-            oneman += 1; }
+            oneman += 1;
+
+        }
 
         while (change >= 5000) {
 
             change = change - 5000;
 
-            fivechun += 1; }
+            fivechun += 1;
+
+        }
 
         while (change >= 1000) {
 
             change = change - 1000;
 
-            onechun += 1; }
+            onechun += 1;
+
+        }
 
         while (change >= 500) {
 
             change = change - 500;
 
-            fiveback += 1; }
+            fiveback += 1;
+
+        }
 
         while (change >= 100) {
 
             change = change - 100;
 
-            oneback += 1; }
+            oneback += 1;
+
+        }
 
         while (change >= 50) {
 
             change = change - 50;
 
-            fivesip += 1; }
+            fivesip += 1;
+
+        }
 
         while (change >= 10) {
 
             change = change - 10;
 
-            onesip += 1; }
+            onesip += 1;
 
-        JOptionPane.showMessageDialog(btnchange,"잔돈은 총 " +sum_change+ "원 입니다.\n"
-
-                        + "===============\n"
-
-                        + print_change(fiveman, 50000)
-
-                        + print_change(oneman, 10000)
-
-                        + print_change(fivechun, 5000)
-
-                        + print_change(onechun, 1000)
-
-                        + print_change(fiveback, 500)
-
-                        + print_change(oneback, 100)
-
-                        + print_change(fivesip, 50)
-
-                        + print_change(onesip, 10)
-
-                        + "===============\n"
-
-                , "잔돈 확인",JOptionPane.INFORMATION_MESSAGE);
+        }
 
 
+
+        if (sum_change == 0) {
+
+            JOptionPane.showMessageDialog(btnchange, "잔돈은 총 " + sum_change + "원 입니다.\n"
+
+                            + "주문해주셔서 감사합니다!\n"
+
+                    , "잔돈 확인", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+        else if (sum_change > 0) {
+
+            JOptionPane.showMessageDialog(btnchange, "잔돈은 총 " + sum_change + "원 입니다.\n"
+
+                            + "===============\n"
+
+                            + print_change(fiveman, 50000)
+
+                            + print_change(oneman, 10000)
+
+                            + print_change(fivechun, 5000)
+
+                            + print_change(onechun, 1000)
+
+                            + print_change(fiveback, 500)
+
+                            + print_change(oneback, 100)
+
+                            + print_change(fivesip, 50)
+
+                            + print_change(onesip, 10)
+
+                            + "===============\n"
+
+                    , "잔돈 확인", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
+        else {
+
+            JOptionPane.showMessageDialog(btnpurchase, "돈이 부족합니다.", "구매 오류", JOptionPane.PLAIN_MESSAGE);
+
+        }
 
     }
+
+
+
     public String print_change(int unit, int num){
-        if(unit != 0)
-            return (num+"원 X " + unit + "장\n");
+
+        if(unit != 0) {
+
+            if (num >= 1000) {
+
+                return (num + "원 X " + unit + "장\n");
+
+            } else {
+
+                return (num + "원 X " + unit + "\n");
+
+            }
+
+        }
+
         else
+
             return "";
+
+    }
+
+
+
+    int resultprice = 0;
+
+    int imsi1 = 0; int imsi2 = 0; int imsi3 = 0;
+
+    int imsia = 0; int imsib = 0; int imsic = 0;
+
+
+
+    public void priceoforder(int number, int price) {
+
+        if(price == 5500) {
+
+            if(imsi1 == 0) {
+
+                imsia = number * price;
+
+                imsi1++;
+
+            } else if(imsi1 > 0) {
+
+                imsia = 0;
+
+                imsia = number * price;
+
+            }
+
+        }
+
+        else if(price == 6000) {
+
+            if (imsi2 == 0) {
+
+                imsib = number * price;
+
+                imsi2++;
+
+            } else if (imsi2 > 0) {
+
+                imsib = 0;
+
+                imsib = number * price;
+
+            }
+
+        }
+
+        else if(price == 2000) {
+
+            if (imsi3 == 0) {
+
+                imsic = number * price;
+
+                imsi3++;
+
+            } else if (imsi3 > 0) {
+
+                imsic = 0;
+
+                imsic = number * price;
+
+            }
+
+        }
+
+        resultprice = imsia + imsib + imsic;
+
     }
 
 
@@ -238,7 +378,7 @@ public class VendingMachine extends JTable {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JPanel order = new JPanel(new GridLayout(2, 1));
+        JPanel order = new JPanel(new GridLayout(3, 1));
 
 
 
@@ -248,33 +388,25 @@ public class VendingMachine extends JTable {
 
 
 
-        txttotal = new JTextField("",10);
-
-        IntegerDocument integeronly = new IntegerDocument ();
-
-        txttotal.setDocument(integeronly);
-
-
-
         txtinput = new JTextField("",10);
 
         IntegerDocument integeronly2 = new IntegerDocument ();
 
         txtinput.setDocument(integeronly2);
 
-
-
-        txttotal.setFont(new Font("굴림", Font.BOLD, 30));
-
         txtinput.setFont(new Font("굴림", Font.BOLD, 30));
 
 
 
+        btnselect = new JButton("선택완료");
+
         btnpurchase = new JButton("구매하기");
 
-        btnchange = new JButton("잔돈확인");
+        btnchange = new JButton("거스름돈 확인");
 
 
+
+        btnselect.setFont(new Font("굴림", Font.BOLD, 30));
 
         btnpurchase.setFont(new Font("굴림", Font.BOLD, 30));
 
@@ -290,6 +422,148 @@ public class VendingMachine extends JTable {
 
 
 
+        SpinnerNumberModel value1 = new SpinnerNumberModel(0, 0, 10, 1);
+
+        SpinnerNumberModel value2 = new SpinnerNumberModel(0, 0, 10, 1);
+
+        SpinnerNumberModel value3 = new SpinnerNumberModel(0, 0, 10, 1);
+
+
+
+        JSpinner spin1 = new JSpinner(value1);
+
+        JSpinner spin2 = new JSpinner(value2);
+
+        JSpinner spin3 = new JSpinner(value3);
+
+
+
+        JComponent field1 = ((JSpinner.DefaultEditor) spin1.getEditor());
+
+        Dimension prefSize1 = field1.getPreferredSize();
+
+        prefSize1 = new Dimension(200, prefSize1.height);
+
+        field1.setPreferredSize(prefSize1);
+
+
+
+        JComponent field2 = ((JSpinner.DefaultEditor) spin2.getEditor());
+
+        Dimension prefSize2 = field1.getPreferredSize();
+
+        prefSize2 = new Dimension(200, prefSize2.height);
+
+        field2.setPreferredSize(prefSize2);
+
+
+
+        JComponent field3 = ((JSpinner.DefaultEditor) spin3.getEditor());
+
+        Dimension prefSize3 = field1.getPreferredSize();
+
+        prefSize3 = new Dimension(200, prefSize3.height);
+
+        field3.setPreferredSize(prefSize3);
+
+
+
+        pn1.add(spin1);
+
+        spin1.setFont(new Font("굴림", Font.BOLD, 20));
+
+
+
+        pn1.add(spin2);
+
+        spin2.setFont(new Font("굴림", Font.BOLD, 20));
+
+
+
+        pn1.add(spin3);
+
+        spin3.setFont(new Font("굴림", Font.BOLD, 20));
+
+
+
+        JLabel space = new JLabel("                        " +
+
+                "                           " +
+
+                "                           " +
+
+                "                           " +
+
+                "                           ");
+
+        space.setFont(new Font("굴림", Font.BOLD, 15));
+
+        pn1.add(space);
+
+
+
+        txttotal = new JTextField("",7);
+
+        txttotal.setEditable(false);
+
+        txttotal.setFont(new Font("굴림", Font.BOLD, 30));
+
+
+
+        spin1.addChangeListener(new ChangeListener() {
+
+            @Override
+
+            public void stateChanged(ChangeEvent e) {
+
+                JSpinner spin1 = (JSpinner)e.getSource();
+
+                int amount1 = (Integer)spin1.getValue();
+
+                priceoforder(amount1, 5500);
+
+            }
+
+        });
+
+
+
+        spin2.addChangeListener(new ChangeListener() {
+
+            @Override
+
+            public void stateChanged(ChangeEvent e) {
+
+                JSpinner spin2 = (JSpinner) e.getSource();
+
+                int amount2 = (Integer)spin2.getValue();
+
+                priceoforder(amount2, 6000);
+
+            }
+
+        });
+
+
+
+        spin3.addChangeListener(new ChangeListener() {
+
+            @Override
+
+            public void stateChanged(ChangeEvent e) {
+
+                JSpinner spin3 = (JSpinner) e.getSource();
+
+                int amount3 = (Integer)spin3.getValue();
+
+                priceoforder(amount3, 2000);
+
+            }
+
+        });
+
+
+
         JLabel text1 = new JLabel("구매 금액 :");
 
         text1.setFont(new Font("굴림", Font.BOLD, 30));
@@ -299,6 +573,8 @@ public class VendingMachine extends JTable {
         pn1.add(text1);
 
         pn1.add(txttotal);
+
+        pn1.add(btnselect);
 
         pn1.add(btnpurchase);
 
@@ -326,23 +602,32 @@ public class VendingMachine extends JTable {
 
 
 
-        /*
-
-        JPanel bottomPn1 = new JPanel();
-
-        bottomPn1.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-
-        bottomPn1.add(btnpurchase);
-
-        bottomPn1.add(btnchange);
-
-        this.add(bottomPn1);
-
-        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-         */
+        btnpurchase.setEnabled(false);
 
         btnchange.setEnabled(false);
+
+
+
+        btnselect.addMouseListener(new MouseAdapter() {
+
+            @Override
+
+            public void mouseClicked(MouseEvent e) {
+
+                super.mouseClicked(e);
+
+                btnpurchase.setEnabled(true);
+
+                int from = resultprice;
+                String to = Integer.toString(from);
+
+                txttotal.setText(to);
+
+            }
+
+        });
+
+
 
         btnpurchase.addMouseListener(new MouseAdapter() {
 
@@ -354,7 +639,7 @@ public class VendingMachine extends JTable {
 
                 super.mouseClicked(e);
 
-                int savedtotal = Integer.parseInt(txttotal.getText());
+                int savedtotal = resultprice;
 
                 int savedinput = Integer.parseInt(txtinput.getText());
 
@@ -380,10 +665,6 @@ public class VendingMachine extends JTable {
 
                     });
 
-
-
-
-
                 } else {
 
                     JOptionPane.showMessageDialog(btnpurchase, "돈이 부족합니다.", "구매 오류", JOptionPane.PLAIN_MESSAGE);
@@ -406,7 +687,7 @@ public class VendingMachine extends JTable {
 
         frame.getContentPane().add(vendingmachine);
 
-        frame.setBounds(200,150,700,600);
+        frame.setBounds(350,150,700,460);
 
         frame.setVisible(true);
 
