@@ -193,14 +193,14 @@ public class VendingMachine extends JTable {
         JPanel pn0 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel pn1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        txtinput = new JTextField("",10);
+        txtinput = new JTextField("",13);
         IntegerDocument integeronly2 = new IntegerDocument ();
         txtinput.setDocument(integeronly2);
         txtinput.setFont(new Font("굴림", Font.BOLD, 30));
 
         btnselect = new JButton("선택완료");
-        btnpurchase = new JButton("구매하기");
-        btnchange = new JButton("거스름돈 확인");
+        btnpurchase = new JButton("구매");
+        btnchange = new JButton("잔돈");
 
         btnselect.setFont(new Font("굴림", Font.BOLD, 30));
         btnpurchase.setFont(new Font("굴림", Font.BOLD, 30));
@@ -243,10 +243,10 @@ public class VendingMachine extends JTable {
         spin3.setFont(new Font("굴림", Font.BOLD, 20));
 
         JLabel space = new JLabel("                        " +
-                                    "                           " +
-                                    "                           " +
-                                    "                           " +
-                                    "                           ");
+                "                           " +
+                "                           " +
+                "                           " +
+                "                           ");
         space.setFont(new Font("굴림", Font.BOLD, 15));
         pn1.add(space);
 
