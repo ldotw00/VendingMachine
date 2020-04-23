@@ -281,7 +281,7 @@ public class VendingMachine extends JTable {
             }
         });
 
-        JLabel text1 = new JLabel("구매 금액 :");
+        JLabel text1 = new JLabel("구매 금액 : ");
         text1.setFont(new Font("굴림", Font.BOLD, 30));
 
         pn1.add(text1);
@@ -289,7 +289,7 @@ public class VendingMachine extends JTable {
         pn1.add(btnselect);
         pn1.add(btnpurchase);
 
-        JLabel text2 = new JLabel("투입 금액 :");
+        JLabel text2 = new JLabel("투입 금액 : ");
         text2.setFont(new Font("굴림", Font.BOLD, 30));
 
         pn1.add(text2);
@@ -308,8 +308,11 @@ public class VendingMachine extends JTable {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 btnpurchase.setEnabled(true);
-                JOptionPane.showMessageDialog(btnselect, "Total price is " + resultprice, "Total Price", JOptionPane.PLAIN_MESSAGE);
+                int from = resultprice;
+                String to = Integer.toString(from);
+                txttotal.setText(to);
             }
+
         });
 
         btnpurchase.addMouseListener(new MouseAdapter() {
@@ -318,20 +321,25 @@ public class VendingMachine extends JTable {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 int savedtotal = resultprice;
-                int savedinput = Integer.parseInt(txtinput.getText());
-                savedchange = savedinput - savedtotal;
-                if (savedchange >= 0) {
-                    JOptionPane.showMessageDialog(btnpurchase, "구매 완료되었습니다.\n잔돈을 확인해주세요.", "구매 완료", JOptionPane.PLAIN_MESSAGE);
-                    btnchange.setEnabled(true);
-                    btnchange.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            super.mouseClicked(e);
-                            calculatechange(savedchange);
-                        }
-                    });
-                } else {
-                    JOptionPane.showMessageDialog(btnpurchase, "돈이 부족합니다.", "구매 오류", JOptionPane.PLAIN_MESSAGE);
+                if(txtinput.getText().length() == 0) {
+                    JOptionPane.showMessageDialog(btnpurchase, "투입된 금액이 없습니다.\n금액을 투입해주세요", "금액 투입", JOptionPane.PLAIN_MESSAGE);
+                }
+                else {
+                    int savedinput = Integer.parseInt(txtinput.getText());
+                    savedchange = savedinput - savedtotal;
+                    if (savedchange >= 0) {
+                        JOptionPane.showMessageDialog(btnpurchase, "구매 완료되었습니다.\n잔돈을 확인해주세요.", "구매 완료", JOptionPane.PLAIN_MESSAGE);
+                        btnchange.setEnabled(true);
+                        btnchange.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                super.mouseClicked(e);
+                                calculatechange(savedchange);
+                            }
+                        });
+                    } else {
+                        JOptionPane.showMessageDialog(btnpurchase, "돈이 부족합니다.", "구매 오류", JOptionPane.PLAIN_MESSAGE);
+                    }
                 }
             }
         });
@@ -340,6 +348,7 @@ public class VendingMachine extends JTable {
     public static void main(String[] args) {
         VendingMachine vendingmachine=new VendingMachine();
         JFrame frame=new JFrame("음식 주문 자판기");
+        frame.setResizable(false);
         frame.getContentPane().add(vendingmachine);
         frame.setBounds(350,150,700,460);
         frame.setVisible(true);
