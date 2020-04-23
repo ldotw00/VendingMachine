@@ -7,11 +7,12 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class VendingMachine extends JTable {
 
     JTextField txttotal, txtinput;
-    JButton btnpurchase, btnchange;
+    JButton btnselect, btnpurchase, btnchange;
 
     public VendingMachine() {
         layouts();
@@ -86,10 +87,50 @@ public class VendingMachine extends JTable {
     }
 
     public String print_change(int unit, int num){
-        if(unit != 0)
-            return (num + "원 X " + unit + "장\n");
+        if(unit != 0) {
+            if (num >= 1000) {
+                return (num + "원 X " + unit + "장\n");
+            } else {
+                return (num + "원 X " + unit + "\n");
+            }
+        }
         else
             return "";
+    }
+
+    int resultprice = 0;
+    int imsi1 = 0; int imsi2 = 0; int imsi3 = 0;
+    int imsia = 0; int imsib = 0; int imsic = 0;
+
+    public void priceoforder(int number, int price) {
+        if(price == 5500) {
+            if(imsi1 == 0) {
+                imsia = number * price;
+                imsi1++;
+            } else if(imsi1 > 0) {
+                imsia = 0;
+                imsia = number * price;
+            }
+        }
+        else if(price == 6000) {
+            if (imsi2 == 0) {
+                imsib = number * price;
+                imsi2++;
+            } else if (imsi2 > 0) {
+                imsib = 0;
+                imsib = number * price;
+            }
+        }
+        else if(price == 2000) {
+            if (imsi3 == 0) {
+                imsic = number * price;
+                imsi3++;
+            } else if (imsi3 > 0) {
+                imsic = 0;
+                imsic = number * price;
+            }
+        }
+        resultprice = imsia + imsib + imsic;
     }
 
     public class IntegerDocument extends PlainDocument {
@@ -152,23 +193,20 @@ public class VendingMachine extends JTable {
         JPanel pn0 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JPanel pn1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        txttotal = new JTextField("",10);
-        IntegerDocument integeronly = new IntegerDocument ();
-        txttotal.setDocument(integeronly);
-        txttotal.setFont(new Font("굴림", Font.BOLD, 30));
-
         txtinput = new JTextField("",10);
         IntegerDocument integeronly2 = new IntegerDocument ();
         txtinput.setDocument(integeronly2);
         txtinput.setFont(new Font("굴림", Font.BOLD, 30));
 
+        btnselect = new JButton("선택완료");
         btnpurchase = new JButton("구매하기");
-        btnchange = new JButton("잔돈확인");
+        btnchange = new JButton("거스름돈 확인");
 
+        btnselect.setFont(new Font("굴림", Font.BOLD, 30));
         btnpurchase.setFont(new Font("굴림", Font.BOLD, 30));
         btnchange.setFont(new Font("굴림", Font.BOLD, 30));
 
-        ImageIcon menu = new ImageIcon(getClass().getResource("image/set.png"));
+        ImageIcon menu = new ImageIcon(getClass().getResource("image/Set.png"));
         JLabel img = new JLabel(menu);
         pn0.add(img);
 
@@ -212,11 +250,16 @@ public class VendingMachine extends JTable {
         space.setFont(new Font("굴림", Font.BOLD, 15));
         pn1.add(space);
 
+        txttotal = new JTextField("",7);
+        txttotal.setEditable(false);
+        txttotal.setFont(new Font("굴림", Font.BOLD, 30));
+
         spin1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                JSpinner spin1 = (JSpinner) e.getSource();
-                int amount1 = 5500 * (Integer)spin1.getValue();
+                JSpinner spin1 = (JSpinner)e.getSource();
+                int amount1 = (Integer)spin1.getValue();
+                priceoforder(amount1, 5500);
             }
         });
 
@@ -224,7 +267,8 @@ public class VendingMachine extends JTable {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSpinner spin2 = (JSpinner) e.getSource();
-                int amount2 = 6000 * (Integer)spin2.getValue();
+                int amount2 = (Integer)spin2.getValue();
+                priceoforder(amount2, 6000);
             }
         });
 
@@ -232,7 +276,8 @@ public class VendingMachine extends JTable {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JSpinner spin3 = (JSpinner) e.getSource();
-                int amount3 = 2000 * (Integer)spin3.getValue();
+                int amount3 = (Integer)spin3.getValue();
+                priceoforder(amount3, 2000);
             }
         });
 
@@ -241,6 +286,7 @@ public class VendingMachine extends JTable {
 
         pn1.add(text1);
         pn1.add(txttotal);
+        pn1.add(btnselect);
         pn1.add(btnpurchase);
 
         JLabel text2 = new JLabel("투입 금액 :");
@@ -254,23 +300,24 @@ public class VendingMachine extends JTable {
         order.add(pn1);
         this.add(order);
 
-        /*
-        JPanel bottomPn1 = new JPanel();
-        bottomPn1.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-
-        bottomPn1.add(btnpurchase);
-        bottomPn1.add(btnchange);
-
-        this.add(bottomPn1);
-        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-         */
+        btnpurchase.setEnabled(false);
         btnchange.setEnabled(false);
+
+        btnselect.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                btnpurchase.setEnabled(true);
+                JOptionPane.showMessageDialog(btnselect, "Total price is " + resultprice, "Total Price", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
+
         btnpurchase.addMouseListener(new MouseAdapter() {
             int savedchange;
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                int savedtotal = Integer.parseInt(txttotal.getText());
+                int savedtotal = resultprice;
                 int savedinput = Integer.parseInt(txtinput.getText());
                 savedchange = savedinput - savedtotal;
                 if (savedchange >= 0) {
@@ -283,8 +330,6 @@ public class VendingMachine extends JTable {
                             calculatechange(savedchange);
                         }
                     });
-
-
                 } else {
                     JOptionPane.showMessageDialog(btnpurchase, "돈이 부족합니다.", "구매 오류", JOptionPane.PLAIN_MESSAGE);
                 }
